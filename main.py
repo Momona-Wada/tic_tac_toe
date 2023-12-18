@@ -64,6 +64,27 @@ while running:
     # draw board
     draw_board()
 
+    # check winner
+    for row_index, row in enumerate(board):
+        # check row
+        if row == 3:
+            print("⭕️win!")
+        if row == -3:
+            print("❌win!")
+        # check column
+        if board[0][row_index] + board[1][row_index] + board[2][row_index] == 3:
+            print("⭕️win!")
+        if board[0][row_index] + board[1][row_index] + board[2][row_index] == -3:
+            print("❌win!")
+        # check diagonal
+        if board[0][0] + board[1][1] + board[2][2] == 3 or board[0][2] + board[1][1] + board[2][0] == 3:
+            print("⭕️win!")
+        if board[0][0] + board[1][1] + board[2][2] == 3 or board[0][2] + board[1][1] + board[2][0] == -3:
+            print("❌win!")
+
+
+
+
     # get event
     for event in pygame.event.get():
         # finish when closed button is clicked
