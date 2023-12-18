@@ -24,6 +24,36 @@ def draw_board():
                 pygame.draw.line(screen, BLUE, (col_index * 200 + 180, row_index * 200 + 20),
                                  (col_index * 200 + 20, row_index * 200 + 180), width=5)
 
+
+def check_winner():
+    winner = None
+    game_over = False
+    for row_index, row in enumerate(board):
+        # check row
+        if sum(row) == 3:
+            winner = "o"
+        if sum(row) == -3:
+            winner = "x"
+        # check column
+        if board[0][row_index] + board[1][row_index] + board[2][row_index] == 3:
+            winner = "o"
+        if board[0][row_index] + board[1][row_index] + board[2][row_index] == -3:
+            winner = "x"
+        # check diagonal
+        if board[0][0] + board[1][1] + board[2][2] == 3 or board[0][2] + board[1][1] + board[2][0] == 3:
+            winner = "o"
+        if board[0][0] + board[1][1] + board[2][2] == -3 or board[0][2] + board[1][1] + board[2][0] == -3:
+            winner = "x"
+
+    # display winner
+    if winner == "o" or winner == "x":
+        winner_text_img = font.render(winner + " Win!", True, BLACK, GREEN)
+        screen.blit(winner_text_img, (200, 150))
+        game_over = True
+
+    return game_over
+
+
 # --------------------------------------------------------------------------------------------------------------------
 
 
@@ -40,10 +70,13 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
+# font setting
+font = pygame.font.SysFont(None, 100)
+
+
 # make a board (0: empty, 1: ⭕️, -1: ❌)
 board = [[0, 0, 0], [0 , 0, 0], [0, 0, 0]]
 number = 1
-
 
 # event main loop ==================================================================================================
 running = True
@@ -51,6 +84,7 @@ while running:
 
     # fill back-ground color
     screen.fill(WHITE)
+
 
     # get the cursor position
     mx, my = pygame.mouse.get_pos()
@@ -65,25 +99,7 @@ while running:
     draw_board()
 
     # check winner
-    for row_index, row in enumerate(board):
-        # check row
-        if row == 3:
-            print("⭕️win!")
-        if row == -3:
-            print("❌win!")
-        # check column
-        if board[0][row_index] + board[1][row_index] + board[2][row_index] == 3:
-            print("⭕️win!")
-        if board[0][row_index] + board[1][row_index] + board[2][row_index] == -3:
-            print("❌win!")
-        # check diagonal
-        if board[0][0] + board[1][1] + board[2][2] == 3 or board[0][2] + board[1][1] + board[2][0] == 3:
-            print("⭕️win!")
-        if board[0][0] + board[1][1] + board[2][2] == 3 or board[0][2] + board[1][1] + board[2][0] == -3:
-            print("❌win!")
-
-
-
+    game_finished = check_winner()
 
     # get event
     for event in pygame.event.get():
@@ -95,9 +111,12 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if board[y][x] == 0:
+            if board[y][x] == 0 and game_finished == False:
                 board[y][x] = number
                 number *= -1
+            if game_finished:
+                board = [[0, 0, 0], [0 , 0, 0], [0, 0, 0]] # reset the board
+                number = 1 # start with "o" when the board is reset
 
     # update
     pygame.display.update()
