@@ -52,8 +52,6 @@ def check_winner():
         game_over = True
 
     return game_over
-
-
 # --------------------------------------------------------------------------------------------------------------------
 
 
@@ -84,7 +82,6 @@ while running:
 
     # fill back-ground color
     screen.fill(WHITE)
-
 
     # get the cursor position
     mx, my = pygame.mouse.get_pos()
