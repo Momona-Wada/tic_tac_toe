@@ -48,7 +48,7 @@ def check_winner():
     # display winner
     if winner == "o" or winner == "x":
         winner_text_img = font.render(winner + " Win!", True, BLACK, GREEN)
-        screen.blit(winner_text_img, (200, 150))
+        screen.blit(winner_text_img, (200, 250))
         game_over = True
 
     return game_over
