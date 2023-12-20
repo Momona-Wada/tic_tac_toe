@@ -15,15 +15,14 @@ def draw_board():
     for row_index, row in enumerate(board):
         for col_index, col in enumerate(row):
             if col == 1:
-                # draw ⭕️
+                # draw ○
                 pygame.draw.circle(screen, RED, (col_index * 200 + 100, row_index * 200 + 100), 80, 5)
             elif col == -1:
-                # draw　❌
+                # draw　×
                 pygame.draw.line(screen, BLUE, (col_index * 200 + 20, row_index * 200 + 20),
                                  (col_index * 200 + 180, row_index * 200 + 180), width=5)
                 pygame.draw.line(screen, BLUE, (col_index * 200 + 180, row_index * 200 + 20),
                                  (col_index * 200 + 20, row_index * 200 + 180), width=5)
-
 
 def check_winner():
     winner = None
@@ -69,10 +68,10 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
 # font setting
-font = pygame.font.SysFont(None, 100)
+font = pygame.font.SysFont("", 100)
 
 
-# make a board (0: empty, 1: ⭕️, -1: ❌)
+# make a board (0: empty, 1: ○, -1: )
 board = [[0, 0, 0], [0 , 0, 0], [0, 0, 0]]
 number = 1
 
