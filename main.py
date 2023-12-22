@@ -44,9 +44,25 @@ def check_winner():
         if board[0][0] + board[1][1] + board[2][2] == -3 or board[0][2] + board[1][1] + board[2][0] == -3:
             winner = "x"
 
+        # check if the board is all marked
+        is_board_full = True
+        for box in board:
+            if 0 in box:
+                is_board_full = False
+                break
+
+        # when the board is full, no winner
+        if winner is None and is_board_full:
+            winner = "draw"
+
     # display winner
     if winner == "o" or winner == "x":
         winner_text_img = font.render(winner + " Win!", True, BLACK, GREEN)
+        screen.blit(winner_text_img, (200, 250))
+        game_over = True
+
+    if winner == "draw":
+        winner_text_img = font.render(winner + "!", True, BLACK, GREEN)
         screen.blit(winner_text_img, (200, 250))
         game_over = True
 
